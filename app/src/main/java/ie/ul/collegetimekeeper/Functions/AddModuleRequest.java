@@ -23,7 +23,7 @@ public class AddModuleRequest extends StringRequest {
         super(Request.Method.POST, LOGIN_REQUEST_URL, listener , null);
         params = new HashMap<>();
         params.put("moduleCode", user.getModulesList().get(index).getModuleID());
-        params.put("moduleName", user.getModulesList().get(index).getModuleTitle());
+        params.put("moduleTitle", user.getModulesList().get(index).getModuleTitle());
     }
 
 
