@@ -142,7 +142,6 @@ public class ModulesActivity extends AppCompatActivity {
                     allModules = new String[array.length()];
                     for(int i = 0; i < allModules.length; i++){
                         allModules[i] = array.getString(i);
-                        Log.i(tag, allModules[i]);
                     }
 
 
