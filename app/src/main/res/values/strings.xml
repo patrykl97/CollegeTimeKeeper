@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">College Time Keeper</string>
+    <string-array name="user_types">
+        <item>Student</item>
+        <item>Staff</item>
+    </string-array>
+    <string name="title_activity_pick_module">PickModuleActivity</string>
+    <string name="title_activity_add_module_dialog">AddModuleDialog</string>
+</resources>

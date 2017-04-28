@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ie.ul.collegetimekeeper.Activities.MainActivity"
+    android:orientation="vertical"
+    android:weightSum="100"
+    android:background="@drawable/background">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:layout_weight="40">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@mipmap/applogo"
+            android:id="@+id/imageView"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="60">
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="50dp">
+
+
+            <Button
+                android:text="Sign in"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/signInBtn"
+                android:layout_weight="0.75"
+                android:textSize="18sp"
+                android:background="#42C7F6"
+                android:onClick="onClickSignIn" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="5dp">
+
+
+            <Button
+                android:text="Sign up"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/signUpBtn"
+                android:layout_weight="0.75"
+                android:textSize="18sp"
+                android:background="#42C7F6"
+                android:onClick="onClickSignUp"/>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
