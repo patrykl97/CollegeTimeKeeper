@@ -1,6 +1,5 @@
 package ie.ul.collegetimekeeper.Activities;
 
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -26,8 +24,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ie.ul.collegetimekeeper.Functions.AddModuleRequest;
+import ie.ul.collegetimekeeper.Functions.AddToModuleListRequest;
 import ie.ul.collegetimekeeper.Functions.AllModulesRequest;
 import ie.ul.collegetimekeeper.Functions.ModuleRequest;
+import ie.ul.collegetimekeeper.Functions.SetLecturerRequest;
 import ie.ul.collegetimekeeper.Objects.User;
 import ie.ul.collegetimekeeper.R;
 
@@ -35,14 +35,14 @@ import static java.util.logging.Logger.global;
 
 public class ModulesActivity extends AppCompatActivity {
 
-    User user;
+    static User user;
     Toolbar toolbar;
     String moduleCode;
     String moduleName;
     String tag = "ie.ul.collegetimekeeper";
     String stringOfModules;
     private String [] allModules;
-    int numModulesSelected = 0;
+    static int numModulesSelected = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,13 +94,56 @@ public class ModulesActivity extends AppCompatActivity {
                                     JSONObject jsonResponse = new JSONObject(response);
                                     boolean success = jsonResponse.getBoolean("success");
                                     if(success){
+                                        Log.i(tag, user.getUserType());
                                         if(user.getUserType().equals("Student")){
-                                          //  user.getModulesList().get(numModulesSelected).setDbModuleID(jsonResponse.getInt("id"));
-                                           // Response.Listener<String> resListener
-                                            Toast.makeText(getApplicationContext(), "You are a user", Toast.LENGTH_SHORT);
-                                        }
-                                        else{
+                                           user.getModulesList().get(numModulesSelected).setDbModuleID(jsonResponse.getInt("id"));
 
+
+                                           Response.Listener<String> resListener = new Response.Listener<String>() {
+                                               @Override
+                                               public void onResponse(String response) {
+                                                   try {
+                                                       JSONObject json = new JSONObject(response);
+                                                       boolean success = json.getBoolean("success");
+                                                       if(success){
+                                                            numModulesSelected++;
+                                                           Log.i(tag, Integer.toString(numModulesSelected));
+                                                       }
+                                                   } catch (JSONException e) {
+                                                       e.printStackTrace();
+                                                   }
+                                               }
+                                           };
+
+                                            AddToModuleListRequest addToModuleListRequest = new AddToModuleListRequest(user, numModulesSelected, resListener);
+                                            RequestQueue queue = Volley.newRequestQueue(ModulesActivity.this);
+                                            queue.add(addToModuleListRequest);
+
+
+                                        }
+                                        else {
+                                            //isLecturer
+                                            Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    try {
+                                                        JSONObject jsonObject = new JSONObject(response);
+                                                        boolean success = jsonObject.getBoolean("success");
+                                                        if(success)
+                                                        {
+                                                            numModulesSelected++;
+                                                            Log.i(tag, Integer.toString(numModulesSelected));
+                                                        }
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+
+                                                }
+                                            };
+
+                                            SetLecturerRequest setLecturerRequest = new SetLecturerRequest(user, numModulesSelected, responseListener);
+                                            RequestQueue queue = Volley.newRequestQueue(ModulesActivity.this);
+                                            queue.add(setLecturerRequest);
                                         }
                                     }
                                 } catch (JSONException e) {
@@ -119,13 +162,6 @@ public class ModulesActivity extends AppCompatActivity {
                 }
             });
 
-            if(user.getUserType().equals("Student")){
-                Toast.makeText(this, "You are a student", Toast.LENGTH_LONG);
-            }
-            else
-            {
-                Toast.makeText(this, "You are a lecturer", Toast.LENGTH_LONG);
-            }
         }
        return true;
     }

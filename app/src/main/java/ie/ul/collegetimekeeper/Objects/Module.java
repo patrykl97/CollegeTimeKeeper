@@ -11,6 +11,7 @@ public class Module {
 
     private int dbModuleID;
     private String moduleID;
+    private int lectureID;
     private String moduleTitle;
     private Lecturer lecturer;
     private Work work;
@@ -38,6 +39,16 @@ public class Module {
 
     public Lecturer getLecturer() {
         return lecturer;
+    }
+
+    public void setLectureID(int lectureID)
+    {
+        this.lectureID = lectureID;
+    }
+
+    public int getLectureID()
+    {
+        return lectureID;
     }
 
     public void setWork() {
