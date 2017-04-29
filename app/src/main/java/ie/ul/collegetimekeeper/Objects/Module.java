@@ -1,5 +1,7 @@
 package ie.ul.collegetimekeeper.Objects;
 
+import java.io.Serializable;
+
 import ie.ul.collegetimekeeper.Objects.Lecturer;
 import ie.ul.collegetimekeeper.Objects.Work;
 
@@ -7,7 +9,7 @@ import ie.ul.collegetimekeeper.Objects.Work;
  * Created by Patryk on 10/03/2017.
  */
 
-public class Module {
+public class Module implements Serializable{
 
     private int dbModuleID;
     private String moduleID;
