@@ -11,7 +11,7 @@ public class Module {
 
     private int dbModuleID;
     private String moduleID;
-    private int lectureID;
+    private int lecturerID;
     private String moduleTitle;
     private Lecturer lecturer;
     private Work work;
@@ -41,14 +41,14 @@ public class Module {
         return lecturer;
     }
 
-    public void setLectureID(int lectureID)
+    public void setLecturerID(int lecturerID)
     {
-        this.lectureID = lectureID;
+        this.lecturerID = lecturerID;
     }
 
-    public int getLectureID()
+    public int getLecturerID()
     {
-        return lectureID;
+        return lecturerID;
     }
 
     public void setWork() {

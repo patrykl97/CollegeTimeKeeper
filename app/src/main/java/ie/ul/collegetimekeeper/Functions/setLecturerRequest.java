@@ -22,7 +22,7 @@ public class SetLecturerRequest extends StringRequest{
     public SetLecturerRequest(User user, int index, Response.Listener<String> listener){
         super(Request.Method.POST, SET_LECTURER_REQUEST, listener , null);
         params = new HashMap<>();
-        params.put("lecturerID", user.getModulesList().get(index).getLectureID() + "");
+        params.put("lecturerID", user.getModulesList().get(index).getLecturerID() + "");
         params.put("moduleCode", user.getModulesList().get(index).getModuleID());
     }
 
