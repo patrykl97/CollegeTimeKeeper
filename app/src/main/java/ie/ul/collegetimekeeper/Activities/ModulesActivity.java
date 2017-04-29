@@ -11,17 +11,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import ie.ul.collegetimekeeper.Functions.AddModuleRequest;
 import ie.ul.collegetimekeeper.Functions.AddToModuleListRequest;
@@ -42,12 +47,22 @@ public class ModulesActivity extends AppCompatActivity {
     String tag = "ie.ul.collegetimekeeper";
     String stringOfModules;
     private String [] allModules;
+   // static String [] pickedModules;
+    static ArrayList<String> pickedModules = new ArrayList<>();
     static int numModulesSelected = 0;
+    static ListView listView;
+    static ArrayAdapter<String> adapterListView;
+    Button saveModules;
+    Toast t;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modules);
+        adapterListView = new ArrayAdapter<String>(this, R.layout.module_activity_listview,pickedModules);
+        listView = (ListView)findViewById(R.id.pickedmodulelist);
+        listView.setAdapter(adapterListView);
+        saveModules = (Button)findViewById(R.id.btnSaveModules);
         user = (User)getIntent().getSerializableExtra("user");
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -71,7 +86,7 @@ public class ModulesActivity extends AppCompatActivity {
             //Toast.makeText(getApplicationContext(), "You selected add module", Toast.LENGTH_SHORT).show();
             View mView = getLayoutInflater().inflate(R.layout.dialog_add_module, null);
             final AutoCompleteTextView module_code = (AutoCompleteTextView) mView.findViewById(R.id.modulecode);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, allModules);
+            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, allModules);
             module_code.setAdapter(adapter);
             final EditText module_name = (EditText) mView.findViewById(R.id.modulename);
             Button bAddModule = (Button)mView.findViewById(R.id.btnaddmodule);
@@ -91,6 +106,7 @@ public class ModulesActivity extends AppCompatActivity {
                         Response.Listener<String> responseListener = new Response.Listener<String>() {
                             public void onResponse(String response) {
                                 try {
+                                    Log.i(tag, "Response ran---------------- No: " + numModulesSelected );
                                     JSONObject jsonResponse = new JSONObject(response);
                                     boolean success = jsonResponse.getBoolean("success");
                                     if(success){
@@ -106,8 +122,13 @@ public class ModulesActivity extends AppCompatActivity {
                                                        JSONObject json = new JSONObject(response);
                                                        boolean success = json.getBoolean("success");
                                                        if(success){
-                                                            numModulesSelected++;
-                                                           Log.i(tag, Integer.toString(numModulesSelected));
+                                                            pickedModules.add(user.getModulesList().get(numModulesSelected).getModuleID());
+
+                                                            Log.i(tag, Integer.toString(numModulesSelected));
+                                                            //adapter.notifyDataSetChanged();
+                                                           numModulesSelected++;
+                                                           dialog.dismiss();
+                                                           listView.invalidate();
                                                        }
                                                    } catch (JSONException e) {
                                                        e.printStackTrace();
@@ -131,8 +152,15 @@ public class ModulesActivity extends AppCompatActivity {
                                                         boolean success = jsonObject.getBoolean("success");
                                                         if(success)
                                                         {
-                                                            numModulesSelected++;
+                                                            user.getModulesList().get(numModulesSelected).setLecturerID(user.getId());
+                                                            pickedModules.add(user.getModulesList().get(numModulesSelected).getModuleID());
+
                                                             Log.i(tag, Integer.toString(numModulesSelected));
+                                                            //adapter.notifyDataSetChanged();
+                                                            numModulesSelected++;
+                                                            dialog.dismiss();
+                                                            listView.invalidate();
+                                                            numModulesSelected++;
                                                         }
                                                     } catch (JSONException e) {
                                                         e.printStackTrace();
@@ -157,7 +185,6 @@ public class ModulesActivity extends AppCompatActivity {
                         queue.add(addModuleRequest);
 
                         //Toast.makeText(getApplicationContext(), "You added a module", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
                     }
                 }
             });
@@ -194,6 +221,16 @@ public class ModulesActivity extends AppCompatActivity {
 
         }
     }
+
+    public void saveModules(View v){
+        if(numModulesSelected >= 4 ){
+
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "You haven't picked enough modules", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
 
 
