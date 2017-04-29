@@ -1,5 +1,6 @@
 package ie.ul.collegetimekeeper.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import ie.ul.collegetimekeeper.Functions.AddModuleRequest;
@@ -36,6 +38,7 @@ import ie.ul.collegetimekeeper.Functions.SetLecturerRequest;
 import ie.ul.collegetimekeeper.Objects.User;
 import ie.ul.collegetimekeeper.R;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static java.util.logging.Logger.global;
 
 public class ModulesActivity extends AppCompatActivity {
@@ -59,7 +62,7 @@ public class ModulesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modules);
-        adapterListView = new ArrayAdapter<String>(this, R.layout.module_activity_listview,pickedModules);
+        adapterListView = new ArrayAdapter<String>(this, R.layout.module_activity_listview, R.id.label, pickedModules);
         listView = (ListView)findViewById(R.id.pickedmodulelist);
         listView.setAdapter(adapterListView);
         saveModules = (Button)findViewById(R.id.btnSaveModules);
@@ -223,8 +226,11 @@ public class ModulesActivity extends AppCompatActivity {
     }
 
     public void saveModules(View v){
-        if(numModulesSelected >= 4 ){
-
+        if(numModulesSelected >= 1 ){
+            Intent i = new Intent(ModulesActivity.this, MenuActivity.class);
+            //Log.i(tag, user.getName());
+            i.putExtra("user", (Serializable) user);
+            startActivity(i);
         }
         else {
             Toast.makeText(getApplicationContext(), "You haven't picked enough modules", Toast.LENGTH_SHORT).show();
