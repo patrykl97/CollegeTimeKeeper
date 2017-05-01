@@ -4,6 +4,11 @@
         <item>Student</item>
         <item>Staff</item>
     </string-array>
+    <string-array name="work_types">
+        <item>Homework</item>
+        <item>Project</item>
+        <item>Assignment</item>
+    </string-array>
     <string name="title_activity_pick_module">PickModuleActivity</string>
     <string name="title_activity_add_module_dialog">AddModuleDialog</string>
     <string name="drawer_open">Open</string>

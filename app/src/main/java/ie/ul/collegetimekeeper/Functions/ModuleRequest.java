@@ -16,7 +16,9 @@ import ie.ul.collegetimekeeper.Objects.User;
 
 public class ModuleRequest extends StringRequest{
 
-    private static final String MODULE_REQUEST_URL = "https://collegetimekeeper.000webhostapp.com/getModules.php";
+   // private static final String MODULE_REQUEST_URL = "https://collegetimekeeper.000webhostapp.com/getModules.php";
+    private static final String MODULE_REQUEST_URL = "http://collegetimekeeper.x10host.com/getModules.php";
+
     private Map<String, String> params;
 
     public ModuleRequest(User user, Response.Listener<String> listener) {

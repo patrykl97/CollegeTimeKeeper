@@ -17,7 +17,8 @@ import ie.ul.collegetimekeeper.Objects.User;
 
 public class RegisterRequest extends StringRequest{
 
-    private static final String REGISTER_REQUEST_URL = "https://collegetimekeeper.000webhostapp.com/register.php";
+   // private static final String REGISTER_REQUEST_URL = "https://collegetimekeeper.000webhostapp.com/register.php";
+    private static final String REGISTER_REQUEST_URL = "http://collegetimekeeper.x10host.com/register.php";
     private Map<String, String> params;
     String tag = "ie.ul.collegetimekeeper";
 

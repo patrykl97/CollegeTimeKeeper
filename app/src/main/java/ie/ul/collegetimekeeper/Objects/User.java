@@ -17,7 +17,7 @@ public class User implements Serializable{
     private String collegeName;
     private String userType;
     private boolean signedIn;
-    private ArrayList<Module> modulesList = new ArrayList<>();
+    private ArrayList<Module> modulesList = new ArrayList<Module>();
     private boolean isStudent; //might have to be inititialised
 
     public User() {
@@ -91,8 +91,8 @@ public class User implements Serializable{
         return signedIn;
     }
 
-    public void addModule(String moduleID, String moduleTitle) {
-        modulesList.add(new Module(moduleID, moduleTitle));
+    public void addModule(String moduleID) {
+        this.modulesList.add(new Module(moduleID));
     }
 
     public ArrayList<Module> getModulesList(){

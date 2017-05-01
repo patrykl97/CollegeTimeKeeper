@@ -87,11 +87,13 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
             user.setCollegeName(etCollegeName.getText().toString());
             user.setUserType(spinner.getSelectedItem().toString());
 
+
             Response.Listener<String> response = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-
+                    Log.i(tag, "-----------------------------: " + response);
                     try {
+                        Log.i(tag, "-----------------------------: " + response);
                         JSONObject jsonResponse = new JSONObject(response);
                         boolean success = jsonResponse.getBoolean("success");
                         if(success){

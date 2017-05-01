@@ -16,7 +16,8 @@ import ie.ul.collegetimekeeper.Objects.User;
 public class SetLecturerRequest extends StringRequest{
 
     String tag = "ie.ul.collegetimekeeper";
-    private static final String SET_LECTURER_REQUEST  = "https://collegetimekeeper.000webhostapp.com/setLecturer.php";
+   // private static final String SET_LECTURER_REQUEST  = "https://collegetimekeeper.000webhostapp.com/setLecturer.php";
+    private static final String SET_LECTURER_REQUEST  = "http://collegetimekeeper.x10host.com/setLecturer.php";
     private Map<String, String> params;
 
     public SetLecturerRequest(User user, int index, Response.Listener<String> listener){

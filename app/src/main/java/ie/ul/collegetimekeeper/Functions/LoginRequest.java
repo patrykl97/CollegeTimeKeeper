@@ -18,7 +18,8 @@ import ie.ul.collegetimekeeper.Objects.User;
 public class LoginRequest extends StringRequest{
 
     String tag = "ie.ul.collegetimekeeper";
-    private static final String LOGIN_REQUEST_URL  = "https://collegetimekeeper.000webhostapp.com/login.php";
+   // private static final String LOGIN_REQUEST_URL  = "https://collegetimekeeper.000webhostapp.com/login.php";
+    private static final String LOGIN_REQUEST_URL  = "http://collegetimekeeper.x10host.com/login.php";
     private Map<String, String> params;
 
     public LoginRequest(User user, Response.Listener<String> listener){

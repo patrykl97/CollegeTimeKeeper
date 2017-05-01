@@ -87,6 +87,8 @@ public class ModulesActivity extends AppCompatActivity {
         boolean moduleAdded;
         int res_id = item.getItemId();
         if(res_id==R.id.action_add){
+            getResponse();
+//            Log.i(tag, "---------------------------------: " + allModules[0]);
             //Toast.makeText(getApplicationContext(), "You selected add module", Toast.LENGTH_SHORT).show();
             final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
             //Toast.makeText(getApplicationContext(), "You selected add module", Toast.LENGTH_SHORT).show();
@@ -107,7 +109,7 @@ public class ModulesActivity extends AppCompatActivity {
                     moduleCode = module_code.getText().toString();
                     moduleName = module_name.getText().toString();
                     if(!moduleCode.isEmpty() && !moduleName.isEmpty()){
-                        user.addModule(moduleCode, moduleName);
+                        user.addModule(moduleCode);
 
                         Response.Listener<String> responseListener = new Response.Listener<String>() {
                             public void onResponse(String response) {

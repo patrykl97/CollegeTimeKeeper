@@ -12,27 +12,65 @@
         android:layout_height="match_parent">
 
 
-        <ListView
-            android:id="@+id/listviewMenu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-            <TextView
-            android:id="@+id/module"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:layout_weight="1">
 
             <TextView
-                android:id="@+id/work"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:id="@+id/selectModuleTextview"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="0.5"
+                android:text="Select Module: " />
 
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/moduleSpinner"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="0.5">
+            </Spinner>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:weightSum="1"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/selectWorkTextview"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="0.5"
+                android:text="Select Work: " />
+
+            <Spinner
+                android:id="@+id/workSpinner"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="0.5">
+            </Spinner>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/startWorkButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start working"
+            android:textSize="15dp"
+            android:onClick="onClickStartWork" />
+
+    </LinearLayout>
 
     <!-- The navigation drawer -->
     <RelativeLayout

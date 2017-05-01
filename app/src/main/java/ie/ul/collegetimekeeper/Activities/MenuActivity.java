@@ -13,10 +13,13 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
+import ie.ul.collegetimekeeper.Objects.CustomObject;
 import ie.ul.collegetimekeeper.Objects.DrawerListAdapter;
 import ie.ul.collegetimekeeper.Objects.DrawerNav;
+import ie.ul.collegetimekeeper.Objects.MenuCustomAdapter;
 import ie.ul.collegetimekeeper.Objects.NavItem;
 import ie.ul.collegetimekeeper.Objects.User;
+import ie.ul.collegetimekeeper.Objects.Work;
 import ie.ul.collegetimekeeper.R;
 
 import static ie.ul.collegetimekeeper.Activities.ModulesActivity.user;
@@ -27,6 +30,8 @@ public class MenuActivity extends AppCompatActivity {
     RelativeLayout mDrawerPane;
     DrawerNav drawerNav;
     static User user;
+    //static ArrayList<Work> workList;
+    ListView listView;
 
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
 
@@ -36,6 +41,7 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         user = (User)getIntent().getSerializableExtra("user");
+       // workList = (ArrayList<Work>)getIntent().getSerializableExtra("work");
         drawerNav = new DrawerNav(this, user);
 
         mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
@@ -50,6 +56,10 @@ public class MenuActivity extends AppCompatActivity {
                 drawerNav.selectItemFromDrawer(position);
             }
         });
+
+        //listView = (ListView)findViewById(R.id.listviewMenu);
+       // MenuCustomAdapter customAdapter = new MenuCustomAdapter(getApplicationContext(), workList);
+        //listView.setAdapter(customAdapter);
 
     }
 }

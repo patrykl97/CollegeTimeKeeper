@@ -14,14 +14,20 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
+import ie.ul.collegetimekeeper.Functions.AllModulesRequest;
 import ie.ul.collegetimekeeper.Functions.LoginRequest;
 import ie.ul.collegetimekeeper.Functions.ModuleRequest;
+import ie.ul.collegetimekeeper.Functions.UserModulesRequest;
+import ie.ul.collegetimekeeper.Functions.WorkRequest;
 import ie.ul.collegetimekeeper.Objects.User;
+import ie.ul.collegetimekeeper.Objects.Work;
 import ie.ul.collegetimekeeper.R;
 
 public class LogInActivity extends AppCompatActivity {
@@ -30,6 +36,7 @@ public class LogInActivity extends AppCompatActivity {
     private int studentID;
     private String password;
     private User user;
+    private ArrayList<Work> workList = new ArrayList<>();
     Toast toast;
     //private Student student;
     //private Staff staff;
@@ -51,7 +58,7 @@ public class LogInActivity extends AppCompatActivity {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                Log.i(tag, "-------------------------------------------:" + response);
                 try {
 
                     final JSONObject jsonResponse = new JSONObject(response);
@@ -72,16 +79,76 @@ public class LogInActivity extends AppCompatActivity {
                         Response.Listener<String> resListener = new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+                                //Log.i(tag, "-----------------------:" + response);
                                 try {
                                     toast.cancel();
                                     JSONObject jsonResponse = new JSONObject(response);
                                     boolean success = jsonResponse.getBoolean("success");
                                     if(success){
-                                        toast = Toast.makeText(getApplicationContext(), "You have picked modules", Toast.LENGTH_SHORT);
-                                        toast.show();
-                                        Intent i = new Intent(LogInActivity.this, MenuActivity.class);
-                                        i.putExtra("user", (Serializable) user);
-                                        LogInActivity.this.startActivity(i);
+
+
+                                        Response.Listener<String> userModuleListener = new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response) {
+                                                try {
+                                                    Log.i(tag, "-----------------------------------: UserModuleListener tried");
+                                                    final JSONObject jsonResponse = new JSONObject(response);
+                                                    JSONArray array = jsonResponse.getJSONArray("module_code");
+                                                    for(int i = 0; i < array.length(); i++){
+                                                        user.addModule(array.getString(i));
+                                                        Log.i(tag, "---------------: " + user.getModulesList().get(i).getModuleID());
+                                                        Intent in = new Intent(LogInActivity.this, MenuActivity.class);
+                                                        in.putExtra("user", (Serializable) user);
+                                                        //i.putExtra("work", (Serializable) workList);
+                                                        LogInActivity.this.startActivity(in);
+                                                    }
+
+
+
+
+                                                   /*Response.Listener<String> getWorkListener = new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            try {
+                                                                JSONObject js = new JSONObject(response);
+
+                                                                JSONArray array = js.getJSONArray("array");
+                                                                for(int i = 0; i < array.length(); i++){
+                                                                    for(int j = 0; j < array.getJSONArray(i).length(); j++){
+                                                                        String a = array.getJSONArray(i).getString(0);
+                                                                        String b = array.getJSONArray(i).getString(1);
+                                                                        int c = array.getJSONArray(i).getInt(2);
+
+                                                                        workList.add(new Work(a, b, c));
+
+                                                                    }
+                                                                }
+
+                                                                toast = Toast.makeText(getApplicationContext(), "You have picked modules", Toast.LENGTH_SHORT);
+                                                                toast.show();
+
+
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                            }
+
+                                                        }
+                                                    };
+
+                                                    WorkRequest workRequest = new WorkRequest(user, getWorkListener);
+                                                    RequestQueue queue = Volley.newRequestQueue(LogInActivity.this);
+                                                    queue.add(workRequest);*/
+
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        };
+                                        UserModulesRequest userModulesRequest = new UserModulesRequest(user, userModuleListener);
+                                        RequestQueue queue = Volley.newRequestQueue(LogInActivity.this);
+                                        queue.add(userModulesRequest);
+
                                     }
                                     else {
                                         toast = Toast.makeText(getApplicationContext(), "You need to pick modules", Toast.LENGTH_SHORT);

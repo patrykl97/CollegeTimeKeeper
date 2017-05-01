@@ -17,18 +17,26 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 
+import ie.ul.collegetimekeeper.Functions.AddWorkRequest;
 import ie.ul.collegetimekeeper.Objects.DrawerListAdapter;
 import ie.ul.collegetimekeeper.Objects.DrawerNav;
 import ie.ul.collegetimekeeper.Objects.User;
 import ie.ul.collegetimekeeper.R;
 
+import static android.R.attr.format;
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static android.support.v7.appcompat.R.id.list_item;
 
-public class TimerActivity extends AppCompatActivity implements ListView.OnItemClickListener {
+public class TimerActivity extends AppCompatActivity {
 
     ListView mDrawerList;
     RelativeLayout mDrawerPane;
@@ -49,6 +57,11 @@ public class TimerActivity extends AppCompatActivity implements ListView.OnItemC
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
     static String tag = "ie.ul.collegetimekeeper";
+    static int position;
+    static boolean reset;
+    int mins;
+    int secs;
+    int milliseconds;
 
 
 
@@ -57,54 +70,17 @@ public class TimerActivity extends AppCompatActivity implements ListView.OnItemC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
         user = (User)getIntent().getSerializableExtra("user");
-
-        drawerNav = new DrawerNav(this, user);
-        mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
-        mDrawerList = (ListView) findViewById(R.id.navList);
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
-        DrawerListAdapter adapter = drawerNav.getAdapter();
-        mDrawerList.setAdapter(adapter);
-
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                Log.d(tag, "onDrawerCOpened: " + getTitle());
-                invalidateOptionsMenu();
-                mDrawerList.bringToFront();
-                mDrawerLayout.requestLayout();
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                Log.d(tag, "onDrawerClosed: " + getTitle());
-
-                invalidateOptionsMenu();
-            }
-        };
-
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-       // mDrawerList.setOnItemClickListener(this);
-
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        // Drawer Item click listeners
-       /* mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i(tag, "Clicked on the screen");
-                drawerNav.selectItemFromDrawer(position);
-            }
-        });*/
-
+        position = getIntent().getIntExtra("position", 0);
 
         timerValue = (TextView) findViewById(R.id.timerValue);
         moduleCode = (TextView) findViewById(R.id.moduleCodeTextview);
         workType = (TextView) findViewById(R.id.workTypeTextview);
+        moduleCode.setText(user.getModulesList().get(position).getModuleID());
+        workType.setText(user.getModulesList().get(position).getWork().getTypeOfWork());
         startButton = (ImageButton) findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                reset = false;
                 startTime = SystemClock.uptimeMillis();
                 customHandler.postDelayed(updateTimerThread, 0);
             }
@@ -120,16 +96,47 @@ public class TimerActivity extends AppCompatActivity implements ListView.OnItemC
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mins = 0;
+                secs = 0;
+                milliseconds = 0;
+                customHandler.removeCallbacks(updateTimerThread);
+                timerValue.setText(String.format("%02d", mins) + ":"
+                        + String.format("%02d", secs) + ":"
+                        + String.format("%03d", milliseconds));
+            }
+        });
+        saveButton = (Button)findViewById(R.id.saveTimeButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customHandler.removeCallbacks(updateTimerThread);
+                String minutes = timerValue.getText().toString();
+                user.getModulesList().get(position).getWork().setTimeSpent(Integer.parseInt(minutes.substring(0,2)));
+                Log.i(tag, "-------------------------------------------------: mins " + Integer.parseInt(minutes.substring(0,2)));
+                Response.Listener<String> listener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            if(success){
+                                Intent i = new Intent(TimerActivity.this, MenuActivity.class);
+                                i.putExtra("user", (Serializable) user);
+                                startActivity(i);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+
+                AddWorkRequest addWorkRequest = new AddWorkRequest(user, position, listener);
+                RequestQueue queue = Volley.newRequestQueue(TimerActivity.this);
+                queue.add(addWorkRequest);
             }
         });
     }
 
-    public class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3){
-            Log.i(tag, "Works in the DrawerItemClick-------------------------------");
-        }
-    }
 
 
 
@@ -138,18 +145,15 @@ public class TimerActivity extends AppCompatActivity implements ListView.OnItemC
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
             updatedTime = timeSwapBuff + timeInMilliseconds;
             int secs = (int) (updatedTime / 1000);
-            int mins = secs / 60;
+            mins = secs / 60;
             secs = secs % 60;
             int milliseconds = (int) (updatedTime % 1000);
-            timerValue.setText("" + mins + ":"
+            timerValue.setText(String.format("%02d", mins) + ":"
                             + String.format("%02d", secs) + ":"
                             + String.format("%03d", milliseconds));
             customHandler.postDelayed(this, 0);
         }
     };
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-    }
 }

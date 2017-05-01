@@ -1,6 +1,7 @@
 package ie.ul.collegetimekeeper.Objects;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import ie.ul.collegetimekeeper.Objects.Lecturer;
 import ie.ul.collegetimekeeper.Objects.Work;
@@ -17,15 +18,13 @@ public class Module implements Serializable{
     private String moduleTitle;
     private Lecturer lecturer;
     private Work work;
+    private ArrayList<Work> workList = new ArrayList<Work>();
+    private int position;
 
-    public Module() {
-
-    }
-
-    public Module(String moduleID, String moduleTitle) {
+    public Module(String moduleID) {
         this.moduleID = moduleID;
-        this.moduleTitle = moduleTitle;
     }
+
 
     public void setDbModuleID(int dbModuleID){
         this.dbModuleID = dbModuleID;
@@ -53,12 +52,23 @@ public class Module implements Serializable{
         return lecturerID;
     }
 
-    public void setWork() {
-        work = new Work();
+    public void setWork(String typeWork){
+        work = new Work(typeWork);
     }
+
 
     public Work getWork() {
         return  work;
+    }
+
+    public void setWorkList(ArrayList<Work> workList){
+        this.workList = workList;
+    }
+
+    public ArrayList<Work> getWorkList() { return workList; }
+
+    public void addToWorkList(String typeOfWork){
+        workList.add(new Work(typeOfWork));
     }
 
     public String getModuleID() {
@@ -68,5 +78,11 @@ public class Module implements Serializable{
     public String getModuleTitle() {
         return moduleTitle;
     }
+
+    public void setPosition(int position){
+        this.position = position;
+    }
+
+    public int getPosition(){ return  position; }
 
 }

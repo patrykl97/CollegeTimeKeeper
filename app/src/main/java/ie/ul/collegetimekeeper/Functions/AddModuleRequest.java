@@ -18,7 +18,8 @@ import ie.ul.collegetimekeeper.Objects.User;
 public class AddModuleRequest extends StringRequest {
 
     String tag = "ie.ul.collegetimekeeper";
-    private static final String ADD_MODULE_REQUEST_URL  = "https://collegetimekeeper.000webhostapp.com/insertModule.php";
+   // private static final String ADD_MODULE_REQUEST_URL  = "https://collegetimekeeper.000webhostapp.com/insertModule.php";
+    private static final String ADD_MODULE_REQUEST_URL  = "http://collegetimekeeper.x10host.com/insertModule.php";
     private Map<String, String> params;
 
     public AddModuleRequest(User user, int index, Response.Listener<String> listener){
