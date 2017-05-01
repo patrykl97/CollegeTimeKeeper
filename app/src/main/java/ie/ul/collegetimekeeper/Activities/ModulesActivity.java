@@ -35,6 +35,7 @@ import ie.ul.collegetimekeeper.Functions.AddToModuleListRequest;
 import ie.ul.collegetimekeeper.Functions.AllModulesRequest;
 import ie.ul.collegetimekeeper.Functions.ModuleRequest;
 import ie.ul.collegetimekeeper.Functions.SetLecturerRequest;
+import ie.ul.collegetimekeeper.Objects.MyCustomAdapter;
 import ie.ul.collegetimekeeper.Objects.User;
 import ie.ul.collegetimekeeper.R;
 
@@ -52,9 +53,10 @@ public class ModulesActivity extends AppCompatActivity {
     private String [] allModules;
    // static String [] pickedModules;
     static ArrayList<String> pickedModules = new ArrayList<>();
+    MyCustomAdapter adapterListView;
     static int numModulesSelected = 0;
-    static ListView listView;
-    static ArrayAdapter<String> adapterListView;
+    ListView listView;
+    //static ArrayAdapter<String> adapterListView;
     Button saveModules;
     Toast t;
 
@@ -62,7 +64,8 @@ public class ModulesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modules);
-        adapterListView = new ArrayAdapter<String>(this, R.layout.module_activity_listview, R.id.label, pickedModules);
+        //adapterListView = new ArrayAdapter<String>(this, R.layout.module_activity_listview, R.id.label, pickedModules);
+        adapterListView = new MyCustomAdapter(pickedModules, this);
         listView = (ListView)findViewById(R.id.pickedmodulelist);
         listView.setAdapter(adapterListView);
         saveModules = (Button)findViewById(R.id.btnSaveModules);

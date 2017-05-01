@@ -79,6 +79,9 @@ public class LogInActivity extends AppCompatActivity {
                                     if(success){
                                         toast = Toast.makeText(getApplicationContext(), "You have picked modules", Toast.LENGTH_SHORT);
                                         toast.show();
+                                        Intent i = new Intent(LogInActivity.this, MenuActivity.class);
+                                        i.putExtra("user", (Serializable) user);
+                                        LogInActivity.this.startActivity(i);
                                     }
                                     else {
                                         toast = Toast.makeText(getApplicationContext(), "You need to pick modules", Toast.LENGTH_SHORT);

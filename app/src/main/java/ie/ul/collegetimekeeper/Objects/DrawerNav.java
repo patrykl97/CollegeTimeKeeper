@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import ie.ul.collegetimekeeper.Activities.MenuActivity;
 import ie.ul.collegetimekeeper.Activities.ModulesActivity;
+import ie.ul.collegetimekeeper.Activities.TimerActivity;
 import ie.ul.collegetimekeeper.R;
 
 import static android.R.attr.switchMinWidth;
@@ -54,12 +55,16 @@ public class DrawerNav {
     public void selectItemFromDrawer(int position) {
         switch(position) {
             case 0:
+                Log.i(tag, "Home selected---------------");
                 Intent i = new Intent(context, MenuActivity.class);
                 i.putExtra("user", (Serializable) user);
                 context.startActivity(i);
                 break;
             case 1:
-
+                Log.i(tag, "Timer selected---------------");
+                i = new Intent(context, TimerActivity.class);
+                i.putExtra("user", (Serializable) user);
+                context.startActivity(i);
                 break;
 
             case 2:

@@ -6,4 +6,6 @@
     </string-array>
     <string name="title_activity_pick_module">PickModuleActivity</string>
     <string name="title_activity_add_module_dialog">AddModuleDialog</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
 </resources>

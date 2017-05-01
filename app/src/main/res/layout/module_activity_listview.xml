@@ -18,7 +18,7 @@
 
     <ImageButton
         android:id="@+id/btnRemoveModule"
-        android:layout_width="4dp"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:src="@drawable/ic_delete"
         />
