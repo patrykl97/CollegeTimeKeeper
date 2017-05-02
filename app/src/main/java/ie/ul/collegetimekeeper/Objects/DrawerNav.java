@@ -9,6 +9,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -16,6 +24,8 @@ import ie.ul.collegetimekeeper.Activities.MenuActivity;
 import ie.ul.collegetimekeeper.Activities.ModulesActivity;
 import ie.ul.collegetimekeeper.Activities.TimerActivity;
 import ie.ul.collegetimekeeper.Activities.WorkSelectionActivity;
+import ie.ul.collegetimekeeper.Functions.AddWorkRequest;
+import ie.ul.collegetimekeeper.Functions.WorkRequest;
 import ie.ul.collegetimekeeper.R;
 
 import static android.R.attr.switchMinWidth;
@@ -33,6 +43,7 @@ public class DrawerNav {
     DrawerListAdapter adapter;
     Intent i;
     String tag = "ie.ul.collegetimekeeper";
+    ArrayList<Work> workList = new ArrayList<>();
 
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
 
@@ -56,11 +67,42 @@ public class DrawerNav {
     public void selectItemFromDrawer(int position) {
         switch(position) {
             case 0:
-                Log.i(tag, "Home selected---------------");
-                Intent i = new Intent(context, MenuActivity.class);
-                i.putExtra("user", (Serializable) user);
-                context.startActivity(i);
-                break;
+
+                Response.Listener<String> getWorkListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject js = new JSONObject(response);
+
+                            JSONArray array = js.getJSONArray("array");
+                            for(int i = 0; i < array.length(); i++){
+                                // for(int j = 0; j < array.getJSONArray(i).length(); j++){
+                                String a = array.getJSONArray(i).getString(0);
+                                String b = array.getJSONArray(i).getString(1);
+                                int c = array.getJSONArray(i).getInt(2);
+
+                                workList.add(new Work(a, b, c));
+                                // }
+
+                                Intent in = new Intent(context, MenuActivity.class);
+                                in.putExtra("user", (Serializable) user);
+                                in.putExtra("work", (Serializable) workList);
+                                context.startActivity(in);
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                };
+
+                WorkRequest workRequest = new WorkRequest(user, getWorkListener);
+                RequestQueue queue = Volley.newRequestQueue(context);
+                queue.add(workRequest);
+        break;
             case 1:
                 Log.i(tag, "Timer selected---------------");
                 i = new Intent(context, WorkSelectionActivity.class);

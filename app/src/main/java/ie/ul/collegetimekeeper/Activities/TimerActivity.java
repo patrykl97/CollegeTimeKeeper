@@ -16,20 +16,25 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import ie.ul.collegetimekeeper.Functions.AddWorkRequest;
+import ie.ul.collegetimekeeper.Functions.WorkRequest;
 import ie.ul.collegetimekeeper.Objects.DrawerListAdapter;
 import ie.ul.collegetimekeeper.Objects.DrawerNav;
 import ie.ul.collegetimekeeper.Objects.User;
+import ie.ul.collegetimekeeper.Objects.Work;
 import ie.ul.collegetimekeeper.R;
 
 import static android.R.attr.format;
@@ -38,12 +43,8 @@ import static android.support.v7.appcompat.R.id.list_item;
 
 public class TimerActivity extends AppCompatActivity {
 
-    ListView mDrawerList;
-    RelativeLayout mDrawerPane;
-    DrawerNav drawerNav;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;
     static User user;
+    static ArrayList<Work> workList = new ArrayList<>();
     private ImageButton startButton;
     private ImageButton pauseButton;
     private Button resetButton;
@@ -120,9 +121,43 @@ public class TimerActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if(success){
-                                Intent i = new Intent(TimerActivity.this, MenuActivity.class);
-                                i.putExtra("user", (Serializable) user);
-                                startActivity(i);
+
+
+                                Response.Listener<String> getWorkListener = new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        try {
+                                            JSONObject js = new JSONObject(response);
+
+                                            JSONArray array = js.getJSONArray("array");
+                                            for(int i = 0; i < array.length(); i++){
+                                                // for(int j = 0; j < array.getJSONArray(i).length(); j++){
+                                                String a = array.getJSONArray(i).getString(0);
+                                                String b = array.getJSONArray(i).getString(1);
+                                                int c = array.getJSONArray(i).getInt(2);
+
+                                                workList.add(new Work(a, b, c));
+                                                // }
+
+                                                Intent in = new Intent(TimerActivity.this, MenuActivity.class);
+                                                in.putExtra("user", (Serializable) user);
+                                                in.putExtra("work", (Serializable) workList);
+                                                TimerActivity.this.startActivity(in);
+
+                                            }
+
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                };
+
+                                WorkRequest workRequest = new WorkRequest(user, getWorkListener);
+                                RequestQueue queue = Volley.newRequestQueue(TimerActivity.this);
+                                queue.add(workRequest);
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

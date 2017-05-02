@@ -97,16 +97,9 @@ public class LogInActivity extends AppCompatActivity {
                                                     for(int i = 0; i < array.length(); i++){
                                                         user.addModule(array.getString(i));
                                                         Log.i(tag, "---------------: " + user.getModulesList().get(i).getModuleID());
-                                                        Intent in = new Intent(LogInActivity.this, MenuActivity.class);
-                                                        in.putExtra("user", (Serializable) user);
-                                                        //i.putExtra("work", (Serializable) workList);
-                                                        LogInActivity.this.startActivity(in);
-                                                    }
 
 
-
-
-                                                   /*Response.Listener<String> getWorkListener = new Response.Listener<String>() {
+                                                    Response.Listener<String> getWorkListener = new Response.Listener<String>() {
                                                         @Override
                                                         public void onResponse(String response) {
                                                             try {
@@ -114,18 +107,22 @@ public class LogInActivity extends AppCompatActivity {
 
                                                                 JSONArray array = js.getJSONArray("array");
                                                                 for(int i = 0; i < array.length(); i++){
-                                                                    for(int j = 0; j < array.getJSONArray(i).length(); j++){
-                                                                        String a = array.getJSONArray(i).getString(0);
-                                                                        String b = array.getJSONArray(i).getString(1);
-                                                                        int c = array.getJSONArray(i).getInt(2);
+                                                                    // for(int j = 0; j < array.getJSONArray(i).length(); j++){
+                                                                    String a = array.getJSONArray(i).getString(0);
+                                                                    String b = array.getJSONArray(i).getString(1);
+                                                                    int c = array.getJSONArray(i).getInt(2);
 
-                                                                        workList.add(new Work(a, b, c));
+                                                                    workList.add(new Work(a, b, c));
+                                                                    // }
 
-                                                                    }
+                                                                    toast = Toast.makeText(getApplicationContext(), "You have picked modules", Toast.LENGTH_SHORT);
+                                                                    toast.show();
+                                                                    Intent in = new Intent(LogInActivity.this, MenuActivity.class);
+                                                                    in.putExtra("user", (Serializable) user);
+                                                                    in.putExtra("work", (Serializable) workList);
+                                                                    LogInActivity.this.startActivity(in);
+
                                                                 }
-
-                                                                toast = Toast.makeText(getApplicationContext(), "You have picked modules", Toast.LENGTH_SHORT);
-                                                                toast.show();
 
 
                                                             } catch (JSONException e) {
@@ -137,7 +134,9 @@ public class LogInActivity extends AppCompatActivity {
 
                                                     WorkRequest workRequest = new WorkRequest(user, getWorkListener);
                                                     RequestQueue queue = Volley.newRequestQueue(LogInActivity.this);
-                                                    queue.add(workRequest);*/
+                                                    queue.add(workRequest);
+
+                                                }
 
 
                                                 } catch (JSONException e) {

@@ -53,7 +53,7 @@ public class MenuCustomAdapter extends BaseAdapter {
         ViewHolder holder = null;
         if(convertView == null) {
             holder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.activity_menu, null);
+            convertView = inflater.inflate(R.layout.time_listview, null);
             holder.textView1 = (TextView) convertView.findViewById(R.id.module);
             holder.textView2 = (TextView) convertView.findViewById(R.id.work);
             holder.textView3 = (TextView) convertView.findViewById(R.id.time);
