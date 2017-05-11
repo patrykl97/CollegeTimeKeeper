@@ -39,6 +39,9 @@ public class WorkSelectionActivity extends AppCompatActivity implements AdapterV
     static User user;
     static String [] modulesArray;
     int position;
+    TextView name;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,8 @@ public class WorkSelectionActivity extends AppCompatActivity implements AdapterV
 
         mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
         mDrawerList = (ListView) findViewById(R.id.navList);
+        name = (TextView)findViewById(R.id.workactivityName);
+        name.setText(user.getName() + " " + user.getSurname());
         DrawerListAdapter adapter = drawerNav.getAdapter();
         mDrawerList.setAdapter(adapter);
 

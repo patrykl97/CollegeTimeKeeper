@@ -37,9 +37,11 @@ import ie.ul.collegetimekeeper.Functions.ModuleRequest;
 import ie.ul.collegetimekeeper.Functions.SetLecturerRequest;
 import ie.ul.collegetimekeeper.Objects.MyCustomAdapter;
 import ie.ul.collegetimekeeper.Objects.User;
+import ie.ul.collegetimekeeper.Objects.Work;
 import ie.ul.collegetimekeeper.R;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
+import static ie.ul.collegetimekeeper.R.id.work;
 import static java.util.logging.Logger.global;
 
 public class ModulesActivity extends AppCompatActivity {
@@ -118,8 +120,6 @@ public class ModulesActivity extends AppCompatActivity {
                                     JSONObject jsonResponse = new JSONObject(response);
                                     boolean success = jsonResponse.getBoolean("success");
                                     if(success){
-                                        Log.i(tag, user.getUserType());
-                                        if(user.getUserType().equals("Student")){
                                            user.getModulesList().get(numModulesSelected).setDbModuleID(jsonResponse.getInt("id"));
 
 
@@ -148,39 +148,6 @@ public class ModulesActivity extends AppCompatActivity {
                                             RequestQueue queue = Volley.newRequestQueue(ModulesActivity.this);
                                             queue.add(addToModuleListRequest);
 
-
-                                        }
-                                        else {
-                                            //isLecturer
-                                            Response.Listener<String> responseListener = new Response.Listener<String>() {
-                                                @Override
-                                                public void onResponse(String response) {
-                                                    try {
-                                                        JSONObject jsonObject = new JSONObject(response);
-                                                        boolean success = jsonObject.getBoolean("success");
-                                                        if(success)
-                                                        {
-                                                            user.getModulesList().get(numModulesSelected).setLecturerID(user.getId());
-                                                            pickedModules.add(user.getModulesList().get(numModulesSelected).getModuleID());
-
-                                                            Log.i(tag, Integer.toString(numModulesSelected));
-                                                            //adapter.notifyDataSetChanged();
-                                                            numModulesSelected++;
-                                                            dialog.dismiss();
-                                                            listView.invalidate();
-                                                            numModulesSelected++;
-                                                        }
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-
-                                                }
-                                            };
-
-                                            SetLecturerRequest setLecturerRequest = new SetLecturerRequest(user, numModulesSelected, responseListener);
-                                            RequestQueue queue = Volley.newRequestQueue(ModulesActivity.this);
-                                            queue.add(setLecturerRequest);
-                                        }
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -234,7 +201,9 @@ public class ModulesActivity extends AppCompatActivity {
         if(numModulesSelected >= 1 ){
             Intent i = new Intent(ModulesActivity.this, MenuActivity.class);
             //Log.i(tag, user.getName());
+            ArrayList<Work> workList = new ArrayList<>();
             i.putExtra("user", (Serializable) user);
+            i.putExtra("work", (Serializable) workList);
             startActivity(i);
         }
         else {

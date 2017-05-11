@@ -25,6 +25,11 @@ public class Module implements Serializable{
         this.moduleID = moduleID;
     }
 
+    public Module(String moduleID, String moduleTitle) {
+        this.moduleID = moduleID;
+        this.moduleTitle = moduleTitle;
+    }
+
 
     public void setDbModuleID(int dbModuleID){
         this.dbModuleID = dbModuleID;

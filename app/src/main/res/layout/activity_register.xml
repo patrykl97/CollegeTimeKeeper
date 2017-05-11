@@ -134,11 +134,6 @@
             android:background="#ffffff"
             android:onClick="onClickValidator"/>
 
-        <Spinner
-            android:id="@+id/user_types_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
 
 
         <Button

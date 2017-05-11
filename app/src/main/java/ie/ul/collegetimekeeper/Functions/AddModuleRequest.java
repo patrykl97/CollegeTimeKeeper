@@ -26,9 +26,9 @@ public class AddModuleRequest extends StringRequest {
         super(Request.Method.POST, ADD_MODULE_REQUEST_URL, listener , null);
         params = new HashMap<>();
         Log.i(tag, user.getModulesList().get(index).getModuleID());
-        Log.i(tag, user.getModulesList().get(index).getModuleTitle());
+//        Log.i(tag, user.getModulesList().get(index).getModuleTitle());
         params.put("moduleCode", user.getModulesList().get(index).getModuleID());
-        params.put("moduleTitle", user.getModulesList().get(index).getModuleTitle());
+        params.put("moduleTitle", "");
     }
 
 

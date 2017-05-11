@@ -13,6 +13,41 @@
         android:background="@drawable/background">
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="6">
+
+            <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Module Code"
+            android:gravity="center"
+                android:textColor="@color/colorPrimaryDark"
+            android:textSize="16dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Work Type"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textColor="@color/colorPrimaryDark"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Time (mins)"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textColor="@color/colorPrimaryDark"/>
+
+        </LinearLayout>
+
         <ListView
             android:id="@+id/listviewMenu"
             android:layout_width="match_parent"
@@ -55,18 +90,18 @@
                     android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rishabh"
+                    android:text="College Time Keeper"
                     android:textColor="#fff"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/desc"
+                    android:id="@+id/menuName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_marginTop="4dp"
-                    android:text="View Profile"
+                    android:text=""
                     android:textColor="#fff"
                     android:textSize="12sp" />
             </LinearLayout>

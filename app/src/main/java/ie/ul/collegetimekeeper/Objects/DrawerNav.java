@@ -5,31 +5,18 @@ import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import ie.ul.collegetimekeeper.Activities.MenuActivity;
-import ie.ul.collegetimekeeper.Activities.ModulesActivity;
-import ie.ul.collegetimekeeper.Activities.TimerActivity;
 import ie.ul.collegetimekeeper.Activities.WorkSelectionActivity;
-import ie.ul.collegetimekeeper.Functions.AddWorkRequest;
 import ie.ul.collegetimekeeper.Functions.WorkRequest;
 import ie.ul.collegetimekeeper.R;
-
-import static android.R.attr.switchMinWidth;
-import static android.R.attr.tag;
 
 /**
  * Created by Patryk on 29/04/2017.
@@ -57,7 +44,7 @@ public class DrawerNav {
     public void addItems(){
         mNavItems.add(new NavItem("Home", "Meetup destination", R.drawable.ic_action_home));
         mNavItems.add(new NavItem("Time", "Change your preferences", R.drawable.ic_action_time));
-        mNavItems.add(new NavItem("About", "Get to know about us", R.drawable.ic_action_about));
+        mNavItems.add(new NavItem("Exit", "Exit the app", R.drawable.ic_exit));
     }
 
     public DrawerListAdapter getAdapter(){
@@ -111,7 +98,7 @@ public class DrawerNav {
                 break;
 
             case 2:
-
+                System.exit(0);
                 break;
         }
     }

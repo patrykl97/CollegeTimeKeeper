@@ -35,17 +35,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     EditText etPassword;
     EditText etPassword2;
     EditText etCollegeName;
-    Spinner spinner;
     String tag = "ie.ul.collegetimekeeper";
-
-    /*final EditText etId = (EditText) findViewById(R.id.id);
-    final EditText etName = (EditText) findViewById(R.id.name);
-    final EditText etSurname = (EditText) findViewById(R.id.surname);
-    final EditText etEmail = (EditText) findViewById(R.id.email);
-    final EditText etPassword = (EditText) findViewById(R.id.pass);
-    final EditText etPassword2 = (EditText) findViewById(R.id.pass2);
-    final EditText etCollegeName = (EditText) findViewById(R.id.collegeName);
-    Spinner spinner = (Spinner) findViewById(R.id.user_types_spinner);*/
 
 
     @Override
@@ -61,14 +51,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         this.etPassword = (EditText) findViewById(R.id.pass);
         this.etPassword2 = (EditText) findViewById(R.id.pass2);
         this.etCollegeName = (EditText) findViewById(R.id.collegeName);
-        this.spinner = (Spinner) findViewById(R.id.user_types_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.user_types, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        this.spinner.setAdapter(adapter);
 
     }
 
@@ -85,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
             user.setEmail(etEmail.getText().toString());
             user.setPassword(etPassword.getText().toString());
             user.setCollegeName(etCollegeName.getText().toString());
-            user.setUserType(spinner.getSelectedItem().toString());
+            user.setUserType("Student");
 
 
             Response.Listener<String> response = new Response.Listener<String>() {

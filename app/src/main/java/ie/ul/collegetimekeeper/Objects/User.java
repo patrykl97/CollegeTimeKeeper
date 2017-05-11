@@ -95,6 +95,10 @@ public class User implements Serializable{
         this.modulesList.add(new Module(moduleID));
     }
 
+    public void addModule(String moduleID, String moduleName) {
+        this.modulesList.add(new Module(moduleID, moduleName));
+    }
+
     public ArrayList<Module> getModulesList(){
         return modulesList;
     }

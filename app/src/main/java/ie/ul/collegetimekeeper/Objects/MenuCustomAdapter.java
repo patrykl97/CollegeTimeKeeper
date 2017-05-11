@@ -20,7 +20,7 @@ public class MenuCustomAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private User user;
     Work work;
-    ArrayList<Work> workList;
+    ArrayList<Work> workList = new ArrayList<>();
 
     private class ViewHolder {
         TextView textView1;

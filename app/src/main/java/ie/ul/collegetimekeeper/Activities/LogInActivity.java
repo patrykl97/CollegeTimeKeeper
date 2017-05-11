@@ -94,9 +94,10 @@ public class LogInActivity extends AppCompatActivity {
                                                     Log.i(tag, "-----------------------------------: UserModuleListener tried");
                                                     final JSONObject jsonResponse = new JSONObject(response);
                                                     JSONArray array = jsonResponse.getJSONArray("module_code");
-                                                    for(int i = 0; i < array.length(); i++){
+                                                    for(int i = 0; i < array.length(); i++) {
                                                         user.addModule(array.getString(i));
                                                         Log.i(tag, "---------------: " + user.getModulesList().get(i).getModuleID());
+                                                    }
 
 
                                                     Response.Listener<String> getWorkListener = new Response.Listener<String>() {
@@ -106,14 +107,15 @@ public class LogInActivity extends AppCompatActivity {
                                                                 JSONObject js = new JSONObject(response);
 
                                                                 JSONArray array = js.getJSONArray("array");
-                                                                for(int i = 0; i < array.length(); i++){
-                                                                    // for(int j = 0; j < array.getJSONArray(i).length(); j++){
+                                                                for(int i = 0; i < array.length(); i++ ) {
+                                                                    Log.i(tag, "Number --------------------:" + i);
                                                                     String a = array.getJSONArray(i).getString(0);
                                                                     String b = array.getJSONArray(i).getString(1);
                                                                     int c = array.getJSONArray(i).getInt(2);
 
                                                                     workList.add(new Work(a, b, c));
                                                                     // }
+                                                                }
 
                                                                     toast = Toast.makeText(getApplicationContext(), "You have picked modules", Toast.LENGTH_SHORT);
                                                                     toast.show();
@@ -122,7 +124,7 @@ public class LogInActivity extends AppCompatActivity {
                                                                     in.putExtra("work", (Serializable) workList);
                                                                     LogInActivity.this.startActivity(in);
 
-                                                                }
+
 
 
                                                             } catch (JSONException e) {
@@ -136,7 +138,6 @@ public class LogInActivity extends AppCompatActivity {
                                                     RequestQueue queue = Volley.newRequestQueue(LogInActivity.this);
                                                     queue.add(workRequest);
 
-                                                }
 
 
                                                 } catch (JSONException e) {
