@@ -98,7 +98,10 @@ public class DrawerNav {
                 break;
 
             case 2:
-                System.exit(0);
+                Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                homeIntent.addCategory( Intent.CATEGORY_HOME );
+                homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                context.startActivity(homeIntent);
                 break;
         }
     }

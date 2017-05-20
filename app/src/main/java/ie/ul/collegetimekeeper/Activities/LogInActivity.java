@@ -48,7 +48,7 @@ public class LogInActivity extends AppCompatActivity {
         this.user = new User();
     }
 
-    protected void onClickLogIn(View v) {
+    public void onClickLogIn(View v) {
         Button button = (Button) v;
         EditText id = (EditText) findViewById(R.id.id);
         EditText pass = (EditText) findViewById(R.id.pass);

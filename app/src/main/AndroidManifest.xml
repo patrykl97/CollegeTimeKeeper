@@ -29,7 +29,6 @@
         <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".Activities.ModulesActivity" />
         <activity android:name=".Activities.MenuActivity" />
-        <activity android:name=".Activities.Timer" />
         <activity android:name=".Activities.TimerActivity" />
         <activity android:name=".Activities.WorkSelectionActivity"></activity>
     </application>

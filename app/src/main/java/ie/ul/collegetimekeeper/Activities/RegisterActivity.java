@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
     }
 
-    protected void onClickRegister(View v){
+    public void onClickRegister(View v){
         if(!etPassword.getText().toString().equals(etPassword2.getText().toString())){
             etPassword2.setError("Passwords do not match");
             etPassword2.requestFocus();
@@ -109,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
     }
 
-    protected void onClickValidator(View v){
+    public void onClickValidator(View v){
         EditText et = (EditText)v;
         if(et.getText().toString().length() == 0){
             et.setError(et.getText().toString() + " not entered!");

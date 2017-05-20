@@ -94,7 +94,7 @@ public class WorkSelectionActivity extends AppCompatActivity implements AdapterV
 
     }
 
-    protected void onClickStartWork(View v){
+    public void onClickStartWork(View v){
         Intent i = new Intent(this, TimerActivity.class);
         position = moduleSpinner.getSelectedItemPosition();
         user.getModulesList().get(position).setWork(workSpinner.getSelectedItem().toString());
